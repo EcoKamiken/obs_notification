@@ -1,0 +1,4 @@
+{
+    "files.eol": "\n",
+    "python.pythonPath": "${workspaceRoot}\\.venv\\Scripts\\python.exe",
+}
