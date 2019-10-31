@@ -30,11 +30,3 @@ class AppConfig():
     def generate_settings(self):
         with open(self.SETTINGS_INI, 'w') as configfile:
             self.default.write(configfile)
-
-
-if __name__ == '__main__':
-    config = AppConfig()
-    print(config.default)
-    print(config.default.sections())
-    print(config.settings.sections())
-    print(config.default['smtp']['hostname'])
