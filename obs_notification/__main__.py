@@ -1,4 +1,6 @@
 import obs_notification.settings
+import obs_notification.mail
 
 config = obs_notification.settings.AppConfig()
-print(config.settings.sections())
+em = obs_notification.mail.Email()
+em.show_vars()
