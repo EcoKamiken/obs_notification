@@ -1,6 +1,17 @@
-import obs_notification.settings
 import obs_notification.mail
 
-config = obs_notification.settings.AppConfig()
-em = obs_notification.mail.Email()
-em.show_vars()
+email_object = obs_notification.mail.Email()
+
+subject = 'title'
+body = '''
+testestestetestsetes
+testestestetestsetes
+testestestetestsetes
+testestestetestsetes
+testestestetestsetes
+testestestetestsetes
+'''
+
+email_object.set_subject(subject)
+email_object.set_body(msg)
+email_object.send()
