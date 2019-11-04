@@ -12,6 +12,5 @@ testestestetestsetes
 testestestetestsetes
 '''
 
-email_object.set_subject(subject)
-email_object.set_body(msg)
+email_object.create_mime(subject, body)
 email_object.send()

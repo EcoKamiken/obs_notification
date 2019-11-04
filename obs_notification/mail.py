@@ -13,36 +13,34 @@ from obs_notification.settings import AppConfig
 
 class Email():
     def __init__(self):
+        logger.info('Create Email object')
         # Load config
-        config = AppConfig()
+        self.config = AppConfig()
 
         # SMTP Settings
-        self.smtp_host = config.settings['smtp'].get('host')
+        self.smtp_host = self.config.settings['smtp'].get('host')
         self.smtp_user = os.environ.get('SMTP_USER')
         self.smtp_pass = os.environ.get('SMTP_PASS')
 
-        # MIMEText
-        self.charset = config.settings['mail'].get('charset')
-        self.body = None
+    def create_mime(self, subject, body):
+        logger.info('Create MIME')
+        self.charset = self.config.settings['mail'].get('charset')
+        self.body = body
         self.msg = MIMEText(self.body, "plain", self.charset)
-        self.msg['Subject'] = ''
-        self.msg['From'] = config.settings['mail'].get('from')
-        self.msg['To'] = config.settings['mail'].get('to')
-        self.msg['Cc'] = config.settings['mail'].get('cc')
-        self.msg['Bcc'] = None
+        self.msg['Subject'] = subject
+        self.msg['From'] = self.config.settings['mail'].get('from')
+        self.msg['To'] = self.config.settings['mail'].get('to')
+        self.msg['Cc'] = self.config.settings['mail'].get('cc')
+        self.msg['Bcc'] = self.config.settings['mail'].get('bcc')
         self.msg['Date'] = None
 
-    def send(self, msg):
+    def send(self):
+        logger.info('Send')
         with SMTP_SSL(self.smtp_host, 465) as smtps:
             smtps.login(self.smtp_user, self.smtp_pass)
-            smtps.send_message(self.msg, self.from_addr, self.to_addr)
-
-    def set_subject(self, subject):
-        self.msg['subject'] = subject
-
-    def set_body(self, body):
-        self.msg['body'] = body
+            smtps.send_message(self.msg)
 
     def noop(self):
+        logger.info('noop')
         with SMTP_SSL(self.smtp_host, 465) as smtps:
             return smtps.noop()
